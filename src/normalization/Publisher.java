@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package normalization;
+
+import java.util.Objects;
 
 /**
  *
@@ -14,9 +11,36 @@ public class Publisher
     public int publisherId;
     public String publisherName;
     public String publisherAddress;
+
     public Publisher()
     {
         
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.publisherName);
+        hash = 19 * hash + Objects.hashCode(this.publisherAddress);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Publisher other = (Publisher) obj;
+        if (!Objects.equals(this.publisherName, other.publisherName)) {
+            return false;
+        }
+        if (!Objects.equals(this.publisherAddress, other.publisherAddress)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
