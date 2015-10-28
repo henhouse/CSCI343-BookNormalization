@@ -17,6 +17,11 @@ public class Author
         
     }
 
+    public String getAuthorId()
+    {
+        return Integer.toString(this.authorId);
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;

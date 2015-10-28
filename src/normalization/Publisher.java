@@ -17,6 +17,11 @@ public class Publisher
         
     }
 
+    public String getPublisherId()
+    {
+        return Integer.toString(this.publisherId);
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
