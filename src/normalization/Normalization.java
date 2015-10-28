@@ -56,7 +56,7 @@ public class Normalization
         }
     }
 
-    public ArrayList<Author> getAuthors(ArrayList<String[]> bookFileData)
+    public void getAuthors(ArrayList<String[]> bookFileData)
     {
         int idCt = 1;
 
@@ -75,11 +75,9 @@ public class Normalization
             // Uncomment to see each value added in console
             //System.out.println(a.toString());
         }
-
-        return authors;
     }
 
-    public ArrayList<Book> getBooks(ArrayList<String[]> bookFileData)
+    public void getBooks(ArrayList<String[]> bookFileData)
     {
         for (int i = 0; i < bookFileData.size(); ++i)
         {
@@ -108,10 +106,8 @@ public class Normalization
             book.add(b);
 
             // Uncomment to see each value added in console
-            System.out.println(b.toString());
+            //System.out.println(b.toString());
         }
-
-        return book;
     }
 
     public void getBookAuthors(ArrayList<String[]> bookFileData)
