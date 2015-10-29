@@ -6,8 +6,16 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
 /**
- *
- * @author henryhenderson
+ * 
+ * Book Store Normalization Assignment
+ * CSCI 343
+ * 
+ * Authors:
+ * Henry Henderson
+ * Mariana Herzog
+ * Katelynn Alexander
+ * Christian Wethor
+ * Ryan Jensen
  */
 public class Normalization
 {
@@ -146,7 +154,7 @@ public class Normalization
     public void buildPublishers()
     {
         FileWriter fileWriter = null;
-        File filename = new File("Publishers.txt");
+        File filename = new File("Publisher.txt");
         try {
             fileWriter = new FileWriter(filename);
             for (Publisher pub : publishers)
@@ -168,7 +176,7 @@ public class Normalization
     public void buildAuthors()
     {
         FileWriter fileWriter = null;
-        File filename = new File("Authors.txt");
+        File filename = new File("Author.txt");
         try {
             fileWriter = new FileWriter(filename);
             for (Author auth : authors)
@@ -190,7 +198,7 @@ public class Normalization
     public void buildBooks()
     {
         FileWriter fileWriter = null;
-        File filename = new File("Books.txt");
+        File filename = new File("Book.txt");
         try {
             fileWriter = new FileWriter(filename);
             for (Book books : book)
@@ -222,7 +230,7 @@ public class Normalization
     public void buildBookAuthors()
     {
         FileWriter fileWriter = null;
-        File filename = new File("BookAuthors.txt");
+        File filename = new File("BookAuthor.txt");
         try {
             fileWriter = new FileWriter(filename);
             for (BookAuthor ba : bookAuthors)
