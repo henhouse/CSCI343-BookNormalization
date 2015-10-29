@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
 /**
  *
  * @author henryhenderson
@@ -13,9 +15,12 @@ public class Normalization
     ArrayList<Author> authors = new ArrayList<>();
     ArrayList<Book> book = new ArrayList<>();
     ArrayList<BookAuthor> bookAuthors = new ArrayList<>();
+    
+    private static final String COMMA_DELIMITER = ", ";
+    private static final String NEW_LINE_SEPARATOR = "\n";
 
 
-    public static void main(String[] args) throws FileNotFoundException
+    public static void main(String[] args) throws FileNotFoundException, IOException
     {
         Normalization normal = new Normalization();
         Scanner infile = new Scanner(new File("BookFile"));
@@ -33,6 +38,8 @@ public class Normalization
         normal.getAuthors(bookFileData);
         normal.getBooks(bookFileData);
         normal.getBookAuthors(bookFileData);
+
+        normal.buildAllCsvFiles();
     }
     
     public void getPublishers(ArrayList<String[]> bookFileData)
@@ -93,12 +100,8 @@ public class Normalization
             tempPub.publisherName = bookFileData.get(i)[4];
             tempPub.publisherAddress = bookFileData.get(i)[5];
             for (int j = 0; j < publishers.size(); ++j)
-            {
                 if (tempPub.equals(publishers.get(j)))
-                {
                     b.publisherId = publishers.get(j).getPublisherId();
-                }
-            }
             b.publicationDate = bookFileData.get(i)[8];
             b.category = bookFileData.get(i)[9];
             b.cost = bookFileData.get(i)[11];
@@ -112,26 +115,127 @@ public class Normalization
 
     public void getBookAuthors(ArrayList<String[]> bookFileData)
     {
-        BookAuthor ba = new BookAuthor();
+        
         for (int i = 0; i < bookFileData.size(); ++i)
         {
+            BookAuthor ba = new BookAuthor();
             ba.isbn = bookFileData.get(i)[1];
 
             Author tempAuth = new Author();
             tempAuth.authorFirstName = bookFileData.get(i)[3];
             tempAuth.authorLastName = bookFileData.get(i)[2];
             for (int j = 0; j < authors.size(); ++j)
-            {
                 if (tempAuth.equals(authors.get(j)))
-                {
                     ba.authorId = authors.get(j).getAuthorId();
-                }
-            }
 
             bookAuthors.add(ba);
 
             // Uncomment to see each value added in console
             //System.out.println(ba.toString());
+        }
+    }
+
+    public void buildAllCsvFiles() throws IOException
+    {
+        buildPublishers();
+        buildAuthors();
+        buildBooks();
+        buildBookAuthors();
+    }
+
+    public void buildPublishers()
+    {
+        FileWriter fileWriter = null;
+        File filename = new File("Publishers.txt");
+        try {
+            fileWriter = new FileWriter(filename);
+            for (Publisher pub : publishers)
+            {
+                fileWriter.append(String.valueOf(pub.publisherId));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(pub.publisherName);
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(pub.publisherAddress);
+                fileWriter.append(NEW_LINE_SEPARATOR);
+            }
+            fileWriter.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void buildAuthors()
+    {
+        FileWriter fileWriter = null;
+        File filename = new File("Authors.txt");
+        try {
+            fileWriter = new FileWriter(filename);
+            for (Author auth : authors)
+            {
+                fileWriter.append(String.valueOf(auth.authorId));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(auth.authorFirstName);
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(auth.authorLastName);
+                fileWriter.append(NEW_LINE_SEPARATOR);
+            }
+            fileWriter.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void buildBooks()
+    {
+        FileWriter fileWriter = null;
+        File filename = new File("Books.txt");
+        try {
+            fileWriter = new FileWriter(filename);
+            for (Book books : book)
+            {
+                fileWriter.append(books.isbn);
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(books.title);
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(books.totalCopiesOrdered);
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(books.copiesInStock);
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(books.publisherId);
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(books.publicationDate);
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(books.category);
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(books.cost);
+                fileWriter.append(NEW_LINE_SEPARATOR);
+            }
+            fileWriter.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void buildBookAuthors()
+    {
+        FileWriter fileWriter = null;
+        File filename = new File("BookAuthors.txt");
+        try {
+            fileWriter = new FileWriter(filename);
+            for (BookAuthor ba : bookAuthors)
+            {
+                fileWriter.append(ba.isbn);
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(ba.authorId);
+                fileWriter.append(NEW_LINE_SEPARATOR);
+            }
+            fileWriter.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
